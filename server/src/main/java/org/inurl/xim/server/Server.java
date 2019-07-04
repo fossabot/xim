@@ -1,7 +1,6 @@
 package org.inurl.xim.server;
 
 import io.netty.bootstrap.ServerBootstrap;
-import io.netty.channel.Channel;
 import io.netty.channel.ChannelFuture;
 import io.netty.channel.ChannelInitializer;
 import io.netty.channel.ChannelOption;
@@ -9,15 +8,21 @@ import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.channel.socket.SocketChannel;
 import io.netty.channel.socket.nio.NioServerSocketChannel;
 import io.netty.handler.logging.LoggingHandler;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * @author raylax
  */
 class Server {
 
+    private static Logger logger = LoggerFactory.getLogger(Server.class);
+
     private String host;
     private int port;
-    private Channel serverChannel;
+    private NioEventLoopGroup bossGroup;
+    private NioEventLoopGroup workGroup;
+    private boolean stopping = false;
 
     Server(String host, int port) {
         this.host = host;
@@ -25,8 +30,9 @@ class Server {
     }
 
     void start() {
-        NioEventLoopGroup bossGroup = new NioEventLoopGroup();
-        NioEventLoopGroup workGroup = new NioEventLoopGroup();
+        logger.info("Starting server");
+        bossGroup = new NioEventLoopGroup();
+        workGroup = new NioEventLoopGroup();
         ServerBootstrap bootstrap = new ServerBootstrap();
         bootstrap.group(bossGroup, workGroup);
         bootstrap.channel(NioServerSocketChannel.class);
@@ -40,14 +46,25 @@ class Server {
         bootstrap.childOption(ChannelOption.SO_KEEPALIVE, true);
         ChannelFuture channelFuture = bootstrap.bind(host, port).syncUninterruptibly();
         if (channelFuture.isSuccess()) {
-            serverChannel = channelFuture.channel();
+            logger.info("Server started, listening on {}:{}", host, port);
+            return;
         }
+        logger.error("Failed to start server");
     }
 
     void stop() {
-        if (serverChannel != null) {
-            serverChannel.close();
+        if (stopping) {
+            return;
         }
+        stopping = true;
+        logger.info("Stopping server");
+        if (workGroup != null) {
+            workGroup.shutdownGracefully();
+        }
+        if (bossGroup != null) {
+            bossGroup.shutdownGracefully();
+        }
+        logger.info("Server stopped");
     }
 
 }
