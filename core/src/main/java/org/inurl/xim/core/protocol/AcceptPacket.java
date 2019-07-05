@@ -1,5 +1,8 @@
 package org.inurl.xim.core.protocol;
 
+/**
+ * @author raylax
+ */
 public class AcceptPacket extends AbstractPacket {
 
     public AcceptPacket(AbstractPacket base) {

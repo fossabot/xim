@@ -15,6 +15,8 @@ public class AbstractPacket {
 
     private int packetType;
 
+    private long times;
+
     public void setPacketType(int packetType) {
         this.packetType = packetType;
     }
@@ -39,5 +41,11 @@ public class AbstractPacket {
         this.trackId = trackId;
     }
 
+    public void setTimes(long times) {
+        this.times = times;
+    }
 
+    public long getTimes() {
+        return times;
+    }
 }

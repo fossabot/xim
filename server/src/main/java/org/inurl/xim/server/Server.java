@@ -8,10 +8,7 @@ import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.channel.socket.SocketChannel;
 import io.netty.channel.socket.nio.NioServerSocketChannel;
 import io.netty.handler.logging.LoggingHandler;
-import org.inurl.xim.core.codec.ErrorPacketEncoder;
-import org.inurl.xim.core.codec.HandshakeDecoder;
-import org.inurl.xim.core.codec.HandshakeProcessor;
-import org.inurl.xim.core.codec.MessageDecoder;
+import org.inurl.xim.core.codec.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -46,6 +43,7 @@ class Server {
                 ch.pipeline().addLast(new LoggingHandler());
                 ch.pipeline().addLast(new HandshakeDecoder());
                 ch.pipeline().addLast(new HandshakeProcessor());
+                ch.pipeline().addLast(new AcceptPacketEncoder());
                 ch.pipeline().addLast(new ErrorPacketEncoder());
             }
         });

@@ -33,6 +33,7 @@ public class HandshakeDecoder extends ByteToMessageDecoder {
         byte[] data = new byte[count];
         byteBuf.readBytes(data);
         packet.setToken(new String(data));
+        packet.setTimes(System.currentTimeMillis());
         out.add(packet);
     }
 
