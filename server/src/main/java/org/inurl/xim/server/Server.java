@@ -8,6 +8,10 @@ import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.channel.socket.SocketChannel;
 import io.netty.channel.socket.nio.NioServerSocketChannel;
 import io.netty.handler.logging.LoggingHandler;
+import org.inurl.xim.core.codec.ErrorPacketEncoder;
+import org.inurl.xim.core.codec.HandshakeDecoder;
+import org.inurl.xim.core.codec.HandshakeProcessor;
+import org.inurl.xim.core.codec.MessageDecoder;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -40,6 +44,9 @@ class Server {
             @Override
             protected void initChannel(SocketChannel ch) {
                 ch.pipeline().addLast(new LoggingHandler());
+                ch.pipeline().addLast(new HandshakeDecoder());
+                ch.pipeline().addLast(new HandshakeProcessor());
+                ch.pipeline().addLast(new ErrorPacketEncoder());
             }
         });
         bootstrap.option(ChannelOption.SO_BACKLOG, 1024);

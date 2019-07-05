@@ -12,8 +12,8 @@ import java.util.List;
 public class MessageDecoder extends ByteToMessageDecoder {
 
     @Override
-    protected void decode(ChannelHandlerContext ctx, ByteBuf in, List<Object> out) {
-
+    protected void decode(ChannelHandlerContext ctx, ByteBuf byteBuf, List<Object> out) {
+        
     }
 
 }

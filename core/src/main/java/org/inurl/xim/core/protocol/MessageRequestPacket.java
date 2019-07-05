@@ -4,17 +4,12 @@ package org.inurl.xim.core.protocol;
  * 消息
  * @author raylax
  */
-public class Message {
+public class MessageRequestPacket extends AbstractPacket {
 
     /**
      * 消息ID
      */
     private int messageId;
-
-    /**
-     * 标志位
-     */
-    private int flags;
 
     /**
      * 会话类型
@@ -42,14 +37,6 @@ public class Message {
 
     public void setMessageId(int messageId) {
         this.messageId = messageId;
-    }
-
-    public int getFlags() {
-        return flags;
-    }
-
-    public void setFlags(int flags) {
-        this.flags = flags;
     }
 
     public SessionType getSessionType() {

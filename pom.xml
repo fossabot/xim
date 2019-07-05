@@ -19,6 +19,7 @@
     <logback.version>1.1.7</logback.version>
     <slf4j.version>1.7.7</slf4j.version>
     <zookeeper.version>3.5.5</zookeeper.version>
+    <fastjson.version>1.2.58</fastjson.version>
   </properties>
 
 
@@ -44,7 +45,11 @@
       <artifactId>logback-classic</artifactId>
       <version>${logback.version}</version>
     </dependency>
-
+    <dependency>
+      <groupId>com.alibaba</groupId>
+      <artifactId>fastjson</artifactId>
+      <version>${fastjson.version}</version>
+    </dependency>
     <dependency>
       <groupId>junit</groupId>
       <artifactId>junit</artifactId>
@@ -64,16 +69,6 @@
         <groupId>org.apache.zookeeper</groupId>
         <artifactId>zookeeper</artifactId>
         <version>${zookeeper.version}</version>
-      </dependency>
-      <dependency>
-        <groupId>com.dyuproject.protostuff</groupId>
-        <artifactId>protostuff-core</artifactId>
-        <version>${protostuff.version}</version>
-      </dependency>
-      <dependency>
-        <groupId>com.dyuproject.protostuff</groupId>
-        <artifactId>protostuff-runtime</artifactId>
-        <version>${protostuff.version}</version>
       </dependency>
     </dependencies>
   </dependencyManagement>
